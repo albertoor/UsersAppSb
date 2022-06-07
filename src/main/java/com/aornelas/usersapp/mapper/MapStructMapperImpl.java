@@ -21,7 +21,6 @@ public class MapStructMapperImpl implements MapStructMapper{
         userDto.setDob(user.getDob().toString());
         userDto.setPhoneNumber(user.getPhoneNumber());
         userDto.setPassword(user.getPassword());
-
         return userDto;
     }
 }
