@@ -36,6 +36,12 @@ public class CustomResponseEntity {
         this.errorMessages = errorMessages;
     }
 
+    public CustomResponseEntity(LocalDateTime timestamp, HttpStatus code, String message) {
+        this.timestamp = timestamp;
+        this.code = code;
+        this.message = message;
+    }
+
     public LocalDateTime getTimestamp() {
         return timestamp;
     }

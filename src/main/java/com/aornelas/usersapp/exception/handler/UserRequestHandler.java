@@ -1,6 +1,8 @@
 package com.aornelas.usersapp.exception.handler;
 
+import com.aornelas.usersapp.exception.EmailTakenException;
 import com.aornelas.usersapp.exception.NotValidUserException;
+import com.aornelas.usersapp.exception.PhoneNumberTakenException;
 import com.aornelas.usersapp.exception.custom.CustomResponseEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -47,4 +49,27 @@ public class UserRequestHandler extends ResponseEntityExceptionHandler {
 
         return new ResponseEntity<>(cre, badRequest);
     }
+
+    // Email Taken Exception
+    @ExceptionHandler(EmailTakenException.class)
+    public ResponseEntity<CustomResponseEntity> handleEmailTaken(EmailTakenException e) {
+        CustomResponseEntity cre = new CustomResponseEntity(
+            LocalDateTime.now(),
+            HttpStatus.CONFLICT,
+            e.getMessage()
+        );
+        return new ResponseEntity<>(cre, HttpStatus.CONFLICT);
+    }
+
+    // When phone number is already taken
+    @ExceptionHandler(PhoneNumberTakenException.class)
+    public ResponseEntity<CustomResponseEntity> handlePhoneNumberTaken(PhoneNumberTakenException e) {
+        CustomResponseEntity cre = new CustomResponseEntity(
+            LocalDateTime.now(),
+            HttpStatus.CONFLICT,
+            e.getMessage()
+        );
+        return new ResponseEntity<>(cre, HttpStatus.CONFLICT);
+    }
+
 }

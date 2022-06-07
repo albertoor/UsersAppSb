@@ -1,12 +1,15 @@
 package com.aornelas.usersapp.service;
 
 import com.aornelas.usersapp.domain.User;
+import com.aornelas.usersapp.exception.EmailTakenException;
 import com.aornelas.usersapp.exception.NotValidUserException;
+import com.aornelas.usersapp.exception.PhoneNumberTakenException;
 import com.aornelas.usersapp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements IUserService {
@@ -24,7 +27,25 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public User create(User newUser) {
-        //userRepo.save(newUser);
+
+        Optional<String> currentEmail = userRepo
+            .findByEmail(newUser.getEmail());
+
+        Optional<String> currentPhoneNumber = userRepo
+            .findByPhoneNumber(newUser.getPhoneNumber());
+
+        if (currentEmail.isPresent()) {
+            throw new EmailTakenException(
+                String.format("The email %s is already taken by another user",
+                    newUser.getEmail()));
+        }
+
+        if (currentPhoneNumber.isPresent()) {
+            throw new PhoneNumberTakenException(
+                String.format("The phone number %s is already taken by another user",
+                    newUser.getPhoneNumber()));
+        }
+
         try {
             User userSaved = userRepo.save(newUser);
             return userSaved;
@@ -32,4 +53,5 @@ public class UserServiceImpl implements IUserService {
             throw new NotValidUserException();
         }
     }
+
 }
