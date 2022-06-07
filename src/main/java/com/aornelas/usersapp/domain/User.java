@@ -19,16 +19,17 @@ public class User {
 
     @NotNull(message = "First name cannot be null")
     @Size(min = 3, max = 50, message = "First name should be at least {min} characters length and {max} maximum")
-    @Column(name = "first_name", length = 50)
+    @Column(name = "first_name")
     private String firstName;
 
     @NotNull(message = "Last name cannot be null")
     @Size(min = 3, max = 50, message = "Last name should be at least {min} characters length and {max} maximum")
-    @Column(name = "last_name", length = 50)
+    @Column(name = "last_name")
     private String lastName;
 
-    @NotNull(message = "Email cannot be null")
     @Email(message = "Please provide a valid address example@domain.com")
+    @NotNull(message = "Email cannot be null")
+    @Size(max = 100, message = "Email should be {max} length max")
     @Column(name = "email")
     private String email;
 
@@ -38,7 +39,7 @@ public class User {
     private LocalDate dob;
 
     @NotNull(message = "Phone number cannot be null")
-    @JsonFormat(pattern = "\\\\d{10}|(?:\\\\d{3}-){2}\\\\d{4}|\\\\(\\\\d{3}\\\\)\\\\d{3}-?\\\\d{4}")
+    @Pattern(regexp="(^$|[0-9]{10})", message = "Only accepts numbers")
     @Column(name = "phone_number")
     private String phoneNumber;
 
@@ -46,12 +47,12 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    public User(String firstName, String lastName, String email, LocalDate dob, String phoneNumber, String password) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.dob = dob;
-        this.phoneNumber = phoneNumber;
-        this.password = password;
-    }
+//    public User(String firstName, String lastName, String email, LocalDate dob, String phoneNumber, String password) {
+//        this.firstName = firstName;
+//        this.lastName = lastName;
+//        this.email = email;
+//        this.dob = dob;
+//        this.phoneNumber = phoneNumber;
+//        this.password = password;
+//    }
 }

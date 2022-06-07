@@ -16,29 +16,29 @@ public class UserConfig {
     @Bean
     CommandLineRunner commandLineRunner(UserRepository userRepository) {
         return args -> {
-            User mario = new User(
-                "Mario",
-                "Lopez",
-                "mario.lopez@gmail.com",
-                LocalDate.of(1997, Month.JANUARY, 5),
-                "6623568910",
-                "hola123456"
-            );
+//            User mario = new User(
+//                "Mario",
+//                "Lopez",
+//                "mario.lopez@gmail.com",
+//                LocalDate.of(1997, Month.JANUARY, 5),
+//                "6623568910",
+//                "hola123456"
+//            );
+//
+//            User patricia = new User(
+//                "Paty",
+//                "Ung",
+//                "paty.ung@gmail.com",
+//                LocalDate.of(1997, Month.JANUARY, 5),
+//                "6623569874",
+//                "hola123456"
+//            );
+//
+//            List<User> usersToAdd = new ArrayList<>();
+//            usersToAdd.add(mario);
+//            usersToAdd.add(patricia);
 
-            User patricia = new User(
-                "Paty",
-                "Ung",
-                "paty.ung@gmail.com",
-                LocalDate.of(1997, Month.JANUARY, 5),
-                "6623569874",
-                "hola123456"
-            );
-
-            List<User> usersToAdd = new ArrayList<>();
-            usersToAdd.add(mario);
-            usersToAdd.add(patricia);
-
-            userRepository.saveAll(usersToAdd);
+            //userRepository.saveAll(usersToAdd);
         };
     }
 }

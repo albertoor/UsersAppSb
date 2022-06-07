@@ -2,6 +2,7 @@ package com.aornelas.usersapp.controller;
 
 import com.aornelas.usersapp.domain.User;
 import com.aornelas.usersapp.dto.UserDto;
+import com.aornelas.usersapp.exception.custom.CustomResponseEntity;
 import com.aornelas.usersapp.mapper.MapStructMapper;
 import com.aornelas.usersapp.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -42,6 +44,13 @@ public class UserController {
         User user = userService.create(newUser);
         UserDto userDto = mapStructMapper.userToUserDto(user);
 
-        return new ResponseEntity(userDto, HttpStatus.CREATED);
+        CustomResponseEntity cre = new CustomResponseEntity(
+            LocalDateTime.now(),
+            HttpStatus.CREATED,
+            "User created!",
+            userDto
+        );
+
+        return new ResponseEntity<>(cre, HttpStatus.CREATED);
     }
 }
