@@ -68,4 +68,22 @@ public class UserController {
         return new ResponseEntity<>(cre, HttpStatus.OK);
     }
 
+    // Deleting user
+    @DeleteMapping(path = "{userId}")
+    public ResponseEntity<?> deleteUser(@Valid @PathVariable Long userId){
+        boolean isDeleted = userService.deleteUser(userId);
+
+        if (isDeleted) {
+            CustomResponseEntity cre = new CustomResponseEntity(
+                LocalDateTime.now(),
+                HttpStatus.OK,
+                String.format("The user ID=%s has been deleted", userId)
+            );
+
+            return new ResponseEntity<>(cre, HttpStatus.OK);
+        }else{
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+    }
+
 }

@@ -64,4 +64,18 @@ public class UserServiceImpl implements IUserService {
             );
         }
     }
+
+    @Override
+    public boolean deleteUser(Long id) {
+        Optional<User> userOptional = userRepo.findById(id);
+
+        if (userOptional.isPresent()){
+            userRepo.deleteById(id);
+            return true;
+        }else{
+            throw new NotFoundUserException(
+                String.format("The user ID=%s was not found!", id)
+            );
+        }
+    }
 }

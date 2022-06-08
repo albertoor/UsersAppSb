@@ -7,4 +7,5 @@ public interface IUserService {
     List<User> findAll();
     User create(User user);
     User getUser(Long id);
+    boolean deleteUser(Long id);
 }
