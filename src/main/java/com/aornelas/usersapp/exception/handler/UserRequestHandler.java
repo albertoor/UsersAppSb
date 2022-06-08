@@ -1,9 +1,6 @@
 package com.aornelas.usersapp.exception.handler;
 
-import com.aornelas.usersapp.exception.EmailTakenException;
-import com.aornelas.usersapp.exception.NotFoundUserException;
-import com.aornelas.usersapp.exception.NotValidUserException;
-import com.aornelas.usersapp.exception.PhoneNumberTakenException;
+import com.aornelas.usersapp.exception.*;
 import com.aornelas.usersapp.exception.custom.CustomResponseEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -80,6 +77,17 @@ public class UserRequestHandler extends ResponseEntityExceptionHandler {
             LocalDateTime.now(),
             HttpStatus.NOT_FOUND,
             e.getMessage()
+        );
+        return new ResponseEntity<>(cre, HttpStatus.NOT_FOUND);
+    }
+
+    // When ID is null
+    @ExceptionHandler(NotNullIdException.class)
+    public ResponseEntity<CustomResponseEntity> handleNotNullIdException(){
+        CustomResponseEntity cre = new CustomResponseEntity(
+            LocalDateTime.now(),
+            HttpStatus.NOT_FOUND,
+            "ID Cannot be null!"
         );
         return new ResponseEntity<>(cre, HttpStatus.NOT_FOUND);
     }

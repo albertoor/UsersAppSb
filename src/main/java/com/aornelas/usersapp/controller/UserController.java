@@ -8,6 +8,7 @@ import com.aornelas.usersapp.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
@@ -84,6 +85,22 @@ public class UserController {
         }else{
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
+    }
+
+    // Update user
+    @PutMapping(path = "/update")
+    public ResponseEntity<?> updateUser(@Valid @RequestBody User user) {
+        User userUpdated = userService.updateUser(user);
+        UserDto userDto = mapStructMapper.userToUserDto(userUpdated);
+
+        CustomResponseEntity cre = new CustomResponseEntity(
+            LocalDateTime.now(),
+            HttpStatus.OK,
+            "User updated!",
+            userDto
+        );
+
+        return new ResponseEntity<>(cre, HttpStatus.OK);
     }
 
 }

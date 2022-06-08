@@ -1,12 +1,11 @@
 package com.aornelas.usersapp.service;
 
 import com.aornelas.usersapp.domain.User;
-import com.aornelas.usersapp.exception.EmailTakenException;
-import com.aornelas.usersapp.exception.NotFoundUserException;
-import com.aornelas.usersapp.exception.NotValidUserException;
-import com.aornelas.usersapp.exception.PhoneNumberTakenException;
+import com.aornelas.usersapp.exception.*;
 import com.aornelas.usersapp.repository.UserRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
@@ -75,6 +74,37 @@ public class UserServiceImpl implements IUserService {
         }else{
             throw new NotFoundUserException(
                 String.format("The user ID=%s was not found!", id)
+            );
+        }
+    }
+
+    @Override
+    public User updateUser(User user) {
+        if (user.getId() == null) {
+            throw new NotNullIdException();
+        }
+
+        Optional optional = userRepo.findById(user.getId());
+
+        if (optional.isPresent()) {
+            try {
+                User userToUpdate = (User) optional.get();
+                userToUpdate.setFirstName(user.getFirstName());
+                userToUpdate.setLastName(user.getLastName());
+                userToUpdate.setEmail(user.getEmail());
+                userToUpdate.setDob(user.getDob());
+                userToUpdate.setPassword(user.getPassword());
+
+                User updatedUser = userRepo.save(userToUpdate);
+
+                return updatedUser;
+
+            } catch (NotValidUserException e){
+                throw new NotValidUserException();
+            }
+        }else{
+            throw new NotFoundUserException(
+                String.format("User with ID=%s was not found!", user.getId())
             );
         }
     }
