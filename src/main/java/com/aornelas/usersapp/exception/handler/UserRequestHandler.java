@@ -1,6 +1,7 @@
 package com.aornelas.usersapp.exception.handler;
 
 import com.aornelas.usersapp.exception.EmailTakenException;
+import com.aornelas.usersapp.exception.NotFoundUserException;
 import com.aornelas.usersapp.exception.NotValidUserException;
 import com.aornelas.usersapp.exception.PhoneNumberTakenException;
 import com.aornelas.usersapp.exception.custom.CustomResponseEntity;
@@ -70,6 +71,17 @@ public class UserRequestHandler extends ResponseEntityExceptionHandler {
             e.getMessage()
         );
         return new ResponseEntity<>(cre, HttpStatus.CONFLICT);
+    }
+
+    // When user was not found
+    @ExceptionHandler(NotFoundUserException.class)
+    public ResponseEntity<CustomResponseEntity> handleNotFoundUserException(NotFoundUserException e) {
+        CustomResponseEntity cre = new CustomResponseEntity(
+            LocalDateTime.now(),
+            HttpStatus.NOT_FOUND,
+            e.getMessage()
+        );
+        return new ResponseEntity<>(cre, HttpStatus.NOT_FOUND);
     }
 
 }

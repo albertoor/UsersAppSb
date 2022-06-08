@@ -52,4 +52,20 @@ public class UserController {
 
         return new ResponseEntity<>(cre, HttpStatus.CREATED);
     }
+
+    @GetMapping(path = "{userId}")
+    public ResponseEntity<?> getUser(@Valid @PathVariable Long userId){
+        User user = userService.getUser(userId);
+        UserDto userDto = mapStructMapper.userToUserDto(user);
+
+        CustomResponseEntity cre = new CustomResponseEntity(
+            LocalDateTime.now(),
+            HttpStatus.OK,
+            "Success!",
+            userDto
+        );
+
+        return new ResponseEntity<>(cre, HttpStatus.OK);
+    }
+
 }
